@@ -1,0 +1,75 @@
+---
+layout: profile
+title: Phieu's dev-portfolio
+author: Tran Kha Phieu
+icon: logo.ico
+thumbnail: /assets/images/covers/emi-avatar.jpg
+---
+
+<div class="container">
+  <div class="profile">
+    <div class="avatar">
+      <picture>
+        <source type="image/webp" srcset="{{ page.thumbnail | replace: '.jpg', '.webp' }}">
+        <source type="image/jpeg" srcset="{{ page.thumbnail }}">
+        <img src="{{ page.thumbnail }}" alt="avatar">
+      </picture>
+    </div>
+    <div class="content">
+      <div class="text">
+        <h3>Kha Phieu</h3>
+        <p>Full stack developer</p>
+        <p>Toàn chức khai phát giả</p>
+        <!-- <h3>Lorem ipsum</h3>
+        <p>Consectetur adipisc</p>
+        <p>Tisus et blandit molest</p> -->
+      </div>
+      <div class="hamburger">
+        <img class="icon menu" src="/assets/icons/menu.svg" alt="">
+        <img class="icon arrow_back hidden" src="/assets/icons/arrow_back.svg" alt="">
+      </div>
+    </div>
+  </div>
+  <div class="box">
+    <i>
+      <a href="/blog">
+        <span class="material-symbols-outlined">
+          <img class="icon" src="/assets/icons/library_books.svg" alt="">
+        </span>
+      </a>
+      <span class="link-title">Blog</span>
+    </i>
+    <i>
+      <a href="/profile/about">
+        <span class="material-symbols-outlined">
+          <img class="icon" src="/assets/icons/account_circle.svg" alt="">
+        </span>
+      </a>
+      <span class="link-title">About</span>
+    </i>
+    <i>
+      <a href="/profile/skill">
+        <span class="material-symbols-outlined">
+          <img class="icon" src="/assets/icons/fitness_center.svg" alt="">
+        </span>
+      </a>
+      <span class="link-title">Skill</span>
+    </i>
+    <i>
+      <a href="/profile/social">
+        <span class="material-symbols-outlined">
+          <img class="icon" src="/assets/icons/share.svg" alt="">
+        </span>
+      </a>
+      <span class="link-title">Social</span>
+    </i>
+    <i>
+      <a href="/profile/contact">
+        <span class="material-symbols-outlined">
+          <img class="icon" src="/assets/icons/call.svg" alt="">
+        </span>
+      </a>
+      <span class="link-title">Contact</span>
+    </i>
+  </div>
+</div>

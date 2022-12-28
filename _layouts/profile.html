@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="{{ page.author }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta property="og:title" content="{{ page.title }} | {{ page.author }}" />
+    <meta property="og:image" content="{{ site.src }}{{ page.thumbnail }}" />
+    <title>{{ page.title }}</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/icons/{{ page.icon }}">
+    <link rel="stylesheet" href="/assets/css/profile-style.css">
+  </head>
+
+  <body>
+    {{ content }}
+
+    <script src="/assets/js/profile-script.js"></script>
+    <!-- <script src="/assets/js/blurry-load.min.js"></script> -->
+  </body>
+</html>

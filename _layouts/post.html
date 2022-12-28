@@ -1,0 +1,127 @@
+---
+layout: blog
+post_class: post-template
+---
+
+<!-- Begin Article -->
+<div class="container">
+  <div class="row">
+
+    <!-- Post Left side -->
+    <div class="col-md-1">
+    </div>
+    
+    <!-- Post -->
+    {% assign author = site.data.authors[page.author] %}
+    <div class="col-md-9">
+      <div class="mainheading">
+
+        <!-- Author Box -->
+        {% if page.author %}
+        <div class="row post-top-meta">
+          <div class="col-xs-12 col-md-3 col-lg-2 text-center text-md-left mb-4 mb-md-0">
+            <img class="author-thumb" src="{{ author.avatar }}" alt="{{ author.display_name }}">
+          </div>
+          <div class="col-xs-12 col-md-9 col-lg-10 text-center text-md-left">
+            <a class="link-dark" href="{{ author.web }}">{{ author.display_name }}</a>
+            <p class="author-description"><span>{{ author.description }}</span></p>
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Post Title -->
+        <h1 class="posttitle">{{ page.title }}</h1>
+
+      </div>
+
+      <!-- Post Featured Image -->
+      {% if page.image %}
+        <figure>
+          <picture>
+            <source srcset="{{ page.image | split: '.' | slice: 0 }}.webp" type="image/webp">
+            <img
+              class="featured-image img-fluid"
+              src="{{ page.image }}" alt="{{ page.title }}"
+              {% imagesize page.image:props %}
+              onerror="fallbackImg(this)"
+              loading="eager"
+            />
+          </picture>
+          <figcaption><i class="text-muted" style="display:block; text-align: center;">{{ page.image_src }}</i></figcaption>
+        </figure>
+      {% endif %}
+      <!-- End Featured Image -->
+
+      <!-- Table of Content-->
+      {% if page.toc %}
+      <div class="article-toc mb-3">
+        <div class="mt-3" id="table-content">
+          {% toc %}
+        </div>
+        <button class="btn default-btn btn-block" onclick="toggle_toc(this)">
+          Ẩn mục lục <img src="/assets/icons/expand_less.svg" alt="">
+        </button>
+      </div>
+      {% endif %}
+      <!-- End Table of Content -->
+
+      <!-- Post Content -->
+      <div class="article-post">
+        {{content}}
+      </div>
+
+      <!-- Post Date -->
+      <!-- <p>
+      <small>
+        <span class="post-date">
+          <time class="post-date" datetime='{{ page.date | date:"%Y-%m-%d" }}'>
+            {{ page.date | date_to_string }}
+          </time>
+          {% if false %}
+            (Updated: <time datetime="{{ page.last_modified_at | date_to_xmlschema }}" itemprop="dateModified">{{ page.last_modified_at | date_to_string }}</time>)
+          {% endif %}
+        </span>
+      </small>
+      </p> -->
+
+      <!-- Post Categories -->
+      {% assign sortedCategories = page.categories | sort %}
+      <div class="after-post-cats">
+        <ul class="tags mb-4">
+          {% for category in sortedCategories %}
+          <li class="mr-1"><span>{{ category }}</span></li>
+          {% endfor %}
+        </ul>
+      </div>
+      <!-- End Categories -->
+
+      <!-- Prev/Next -->
+      <div class="row PageNavigation d-flex justify-content-between font-weight-bold">
+        <span class="prev d-block col-md-6 text-left mt-3">
+          {% if page.previous.url %}
+          <a href="{{page.previous.url}}"> &laquo; {{page.previous.title}}</a>
+          {% endif %}
+        </span>
+
+        <span class="next d-block col-md-6 text-right mt-3">
+          {% if page.next.url %}
+          <a href="{{page.next.url}}">{{page.next.title}} &raquo; </a>
+          {% endif %}
+        </span>
+
+        <div class="clearfix"></div>
+      </div>
+      <!-- End Categories -->
+
+    </div>
+    <!-- End Post -->
+
+    <!-- Post Right Side -->
+    <div class="col-md-2"></div>
+
+  </div>
+</div>
+<!-- End Article -->
+
+<script src="/assets/js/post.js"></script>
+	

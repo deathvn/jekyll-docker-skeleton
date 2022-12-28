@@ -1,0 +1,121 @@
+---
+layout: default
+title: 404
+permalink: /404.html
+author: Page not found
+---
+
+<div class="text-center" id="quote">
+  <h1 class="title-404 mt-2"><span class="badge badge-danger">404</span> Page Not Found</h1>
+  <p class="hint js-quote">👇<em>Nhấn vào bên dưới để thấy điều huyền diệu</em></p>
+  <blockquote @click="newQuote" class="quote-wrapper mt-2 js-quote">
+    <p class="quote-message"><i>"[[ message ]]"</i></p>
+    <p class="quote-author"> - [[ author ]]</p>
+  </blockquote>
+  <!-- When JS is blocked -->
+  <noscript class="quote-wrapper mt-5">
+    <blockquote>
+      <p class="quote-message"><i>"Không ai tắm hai lần trên một dòng sông."</i></p>
+      <p class="quote-author"> - Nước sông cuốn page đi rồi</p>  
+    </blockquote>
+  </noscript>
+</div>
+
+<!-- Embed Vue@2 script -->
+{% capture src %}{% if site.debug %}{{ site.vue.url.dev }}{% else %}{{ site.vue.url.product }}{% endif %}{% endcapture %}
+<script src="{{src}}"></script>
+<script>
+document.querySelectorAll(".js-quote").forEach(el => el.style.display = "block");
+const EN_API = 'https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json';
+const VI_API = JSON.parse(`{{ site.data.quotes | jsonify }}`);
+
+function getRandomIndex (size) {
+  return Math.floor(Math.random() * size);
+}
+
+var app = new Vue({
+  el: '#quote',
+  delimiters: ['[[', ']]'],
+  data: {
+    quotesList: [],
+    message: '',
+    author: '',
+  },
+
+  methods: {
+    newQuote: function() {      
+      const quoteIndex = getRandomIndex(this.quotesList.length);
+      const quote = this.quotesList[quoteIndex];
+      if (quote) {
+        this.message = quote.quote;
+        this.author = quote.author;
+      }
+    },
+
+    initQuote: function() {
+      const quoteIndex = getRandomIndex(VI_API.length);
+      const quote = VI_API[quoteIndex]
+      this.message = quote.message;
+      this.author = quote.author;
+    }
+  },
+
+  created() {
+    this.initQuote();
+  },
+
+  mounted() {
+    $.getJSON(EN_API, (data) => {
+      this.quotesList = data['quotes'];
+    });
+  }
+
+})
+</script>
+
+<style>
+#quote {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.quote-wrapper {
+  width: 80%;
+  cursor: pointer;
+}
+
+.js-quote {
+  display: None;
+}
+
+.quote-message {
+  text-align: left;
+  color: #212529;
+}
+
+.quote-author {
+  text-align: right;
+  color: #212529;
+}
+
+.hint {
+  font-size: 0.75rem;
+  color: #6c757d;
+}
+
+@media screen and (min-width: 650px) {
+  .title-404 {
+    font-size: 6rem;
+  }
+  .quote-message {
+    font-size: 1.5rem;
+  }
+  .hint {
+    font-size: 1rem;
+  }
+  .quote-wrapper {
+    width: 70%;
+  }
+}
+</style>

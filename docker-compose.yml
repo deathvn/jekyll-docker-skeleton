@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  jekyll:
+    user: ${DOCKER_USER}
+    image: jekyll:local
+    build:
+      context: ./
+      dockerfile: _docker/jekyll_Dockerfile
+    env_file:
+      - ./_config/.env
+    ports:
+      - 4000:4000
+      - 3000:3000
+    volumes:
+      - .:/srv/jekyll
+    command: ["./_auto/jekyll_entrypoint.sh"]

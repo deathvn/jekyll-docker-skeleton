@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+{% capture thumbnail %}{% if page.image %}{{ page.image }}{% else %}/assets/icons/logo.webp{% endif %}{%endcapture %}
+
+{% capture summary %}{{ page.excerpt | strip_newlines | strip_html | truncatewords: 20 }}{%endcapture %}
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <meta name="author" content="{{ site.data.authors[page.author].display_name }}" />
+  <meta name="description" content="{{ summary }}">
+  <meta property="og:title" content="{{ page.title }} | {{ page.author }}" />
+  <meta property="og:image" content="{{ site.src }}{{ thumbnail }}" />
+  <meta property="og:description" content="{{ summary }}" />
+  <!-- HTML5 introduced a method to let web designers take control over the viewport, through the <meta> tag. -->
+  <link rel="canonical" href="{{ page.url | prepend: site.src }}" />
+  <link rel="icon" href="/assets/icons/logo.ico" />
+  <title>{{ page.title }} | {{ page.author }}</title>
+  <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/assets/css/screen.css" rel="stylesheet" />
+  <script src="/assets/js/jquery.min.js"></script>
+</head>
+
+{% capture layout %}
+  {% if page.layout %}layout-{{ page.layout }}{% endif %}
+{%endcapture %}
+
+<body class="{{layout}}">
+  <!-- Begin Menu Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top mediumnavigation nav-down">
+    <div class="container pr-0">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMediumish"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarMediumish">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Deathvn</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/blog/">Blog</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/novels/">Tôi tự dịch</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- End Navigation -->
+
+  <div class="site-content">
+    <div class="container">
+      <div class="main-content">{{ content }}</div>
+    </div>
+
+    <!-- Begin Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-sm-6 text-center text-lg-left">
+            <p>Copyright © {{ site.time | date: "%Y" }} {{ site.name }}</p>
+            <p>
+              Blog's Theme forked from
+              <a href="https://github.com/wowthemesnet/mediumish-theme-jekyll">WowThemes</a>
+            </p>
+          </div>
+          <div class="col-md-6 col-sm-6 text-center text-lg-right">
+            <p>{{ site.blog_name }}</p>
+            <p>Powered by Jekyll and Github Page</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- End Footer -->
+  </div>
+
+  <!-- Scripts -->
+  <script src="/assets/js/bootstrap.min.js"></script>
+  <script src="/assets/js/mediumish.js"></script>
+</body>
+
+</html>

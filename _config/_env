@@ -1,0 +1,12 @@
+# container jekyll
+PYTHON_ENV="blog-env"
+
+# panda tinify
+TINIFY_KEY="<your-key>"
+
+# Text Color
+NC='\033[0m' # No Color
+RED='\033[0;31m'
+GREEN='\033[0;92m'
+BLUE='\033[0;94m'
+BBlue='\033[1;34m'

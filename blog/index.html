@@ -1,0 +1,32 @@
+---
+layout: blog
+title: Blogs List
+author: deathvn
+---
+<h1 class="text-center">Các bài đăng gần đây</h1>
+
+<!-- This loops through the paginated posts -->
+{% include blog-list.html postList=paginator.posts %}
+
+<!-- Pagination links -->
+<div class="mt-3 text-center">
+  <span>
+    {% if paginator.previous_page %}
+      <a href="{{ paginator.previous_page_path }}">&laquo;</a>
+    {% else %}
+      <span class="prev text-muted">&laquo;</span>
+    {% endif %}
+  </span>
+
+  <span>
+    Trang {{ paginator.page }} / {{ paginator.total_pages }}
+  </span>
+
+  <span>
+    {% if paginator.next_page %}
+      <a href="{{ paginator.next_page_path }}">&raquo;</a>
+    {% else %}
+      <span class="next text-muted">&raquo;</span>
+    {% endif %}
+  </span>
+</div>

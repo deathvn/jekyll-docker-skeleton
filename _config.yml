@@ -1,0 +1,77 @@
+blog_name: Maple & Wind Blog
+admin:
+  name: "Gió Thu thổi tới - Lá phong rơi"
+  url : "https://www.facebook.com/mapleNwind.blog"
+
+src: "https://deathvn.github.io"
+
+permalink: /blog/:title/
+
+name: deathvn
+
+collections:
+  novels:
+    output: true
+  chapters:
+    output: true
+  authors:
+    output: true
+  profile:
+    output: true
+
+plugins:
+  - jekyll-loading-lazy
+  - jekyll-toc
+  - jekyll-image-size
+  - jekyll-last-modified-at
+  - jekyll-paginate
+  - jekyll-sitemap
+
+paginate: 6
+paginate_path: "/blog/page:num/"
+
+defaults:
+  - scope:
+      path: "_posts"
+      type: "posts"
+    values:
+      layout: post
+      toc   : true
+      author: deathvn
+  - scope:
+      path: "_profile"
+    values:
+      layout: profile
+      title: "Phieu's dev-portfolio"
+      author: "Tran Kha Phieu"
+      icon: logo.ico
+      thumbnail: /assets/images/covers/emi-avatar.jpg
+  - scope:
+      path: "_novel"
+    values:
+      layout: novel
+  - scope:
+      path: "_chapters"
+    values:
+      layout: chapter
+  - scope:
+      path: "_chapters/legend-of-the-great-saint"
+    values:
+      novel: legend-of-the-great-saint
+
+debug: false
+
+vue:
+  url:
+    dev    : "https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"
+    product: "/assets/js/vue@2.js"
+
+exclude:
+  - README.md
+  - cli
+  - docker-compose.yml
+  - requirements.txt
+  - blog-env
+  - node_modules
+  - package.json
+  - package-lock.json

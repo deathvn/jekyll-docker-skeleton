@@ -1,0 +1,19 @@
+---
+layout: blog
+title: Categories
+author: deathvn
+permalink: /categories/
+---
+
+<div id="archives">
+{% for category in site.categories %}
+  <div class="archive-group">
+    {% capture category_name %}{{ category | first }}{% endcapture %}
+    <h3 class="category-head">{{ category_name }}</h3>
+
+    <!-- This loops through the paginated posts -->
+    {% assign posts = site.categories[category_name] %}
+    {% include blog-list.html postList=posts %}
+  </div>
+{% endfor %}
+</div>

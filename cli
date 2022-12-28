@@ -1,0 +1,132 @@
+#!/usr/bin/env python
+import os
+import sys
+import csv
+from _config import const
+
+## Current user
+U_ID = os.getuid()
+G_ID = os.getgid()
+DOCKER_USER = f'{U_ID}:{G_ID}'
+docker_header = f'U_ID={U_ID} G_ID={G_ID} DOCKER_USER={DOCKER_USER}'
+
+'''
+Defined some functions
+    return 0 if no error,
+    else return error code
+(like C++)
+'''
+
+def gen_compose_cmd(service_function, cmd):
+    return f'{docker_header} docker compose exec {service_function} -lc "{cmd}"'
+
+
+def run_cmd(command):
+    err_code = os.system(command)
+    if err_code:
+        print("ERROR when run", command)
+
+
+def docker_cmd(controller):
+    cmd_dict = {
+        'build': f'{docker_header} docker compose build', # re-build docker image
+        'up': f'{docker_header} docker compose up -d',
+        'down': f'{docker_header} docker compose down',
+    }
+    if cmd_dict.get(controller):
+        run_cmd(cmd_dict.get(controller))
+        return 0
+    return 1
+
+
+def encrypt_page():
+    if not os.path.exists(const.ENCRYPT_LIST_CSV):
+        print(f"Can't encrypt, file {const.ENCRYPT_LIST_CSV} does not exist")
+        return
+
+    with open(const.ENCRYPT_LIST_CSV) as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        for row in csv_reader:
+            blog_title = row[0]
+            password = row[1]
+
+            html_file = f'_site/blog/{blog_title}/index.html'
+            print("Encrypting:", html_file)
+
+            cmd = f'''npx staticrypt {html_file} "{password}" \
+            --noremember -o {html_file}                       \
+            --file-template {const.ENCRYPT_TEMPLATE}          \
+            --decrypt-button "UNLOCK"                         \
+            --passphrase-placeholder "Passphrase"
+            '''
+            run_cmd(gen_compose_cmd('jekyll bash', cmd))
+
+
+def app_cmd(controller):
+    if controller == 'serve':
+        # Watch and serve blog page (use for coding)
+        # Jekyll image need `root` user to expose port of jekyll serve
+        run_cmd(gen_compose_cmd('-u root jekyll bash', 'jekyll serve'))
+        return 0
+
+    if controller == 'build':
+        # Build blog page (use for deploy production)
+        run_cmd(gen_compose_cmd('jekyll bash', 'npm install'))
+        run_cmd('rm -R _site')
+        run_cmd(gen_compose_cmd('jekyll bash', 'jekyll build'))
+        run_cmd(gen_compose_cmd('jekyll bash', './_auto/minify.sh'))
+        encrypt_page()
+        run_cmd(gen_compose_cmd('jekyll bash', 'npx serve ./_site'))
+        return 0
+
+    return 1
+
+
+def tool_cmd(controller):
+    venv = 'source blog-env/bin/activate'
+
+    if controller == 'tinify':
+        # Use https://tinify.com/ to compress lossy images
+        try:
+            img_folder = sys.argv[3]
+        except:
+            return 1
+
+        if img_folder:
+            run_cmd(gen_compose_cmd('jekyll bash', f'{venv};python _auto/tinyf_image.py {img_folder}'))
+            return 0
+
+    if controller == 'cwebp':
+        # Convert images to webp format
+        try:
+            img_folder = sys.argv[3]
+        except:
+            return 1
+
+        run_cmd(gen_compose_cmd('jekyll bash', f'./_auto/webp_converter.sh {img_folder}'))
+        return 0
+
+    return 1
+
+
+def main():
+    function = sys.argv[1]
+
+    if function == 'docker':
+        ## Docker up - down - build
+        return docker_cmd(sys.argv[2])
+
+    if function == 'app':
+        ## Jekyll serve - build, Push to github page
+        return app_cmd(sys.argv[2])
+
+    if function == 'tool':
+        ## Tools tinify - cwebp
+        return tool_cmd(sys.argv[2])
+
+    return 1
+
+
+if __name__ == '__main__':
+    if main():
+        print("Invalid function")

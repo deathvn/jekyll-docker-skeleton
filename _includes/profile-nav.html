@@ -1,0 +1,46 @@
+<div class="navbar">
+  <ul class="nav-box">
+    <li>
+      <a href="/">
+        <img class="nav-icon" src="/assets/icons/home.svg" alt="">
+        <span class="link-title">Home</span>
+      </a>
+    </li>
+
+    {% if include.hide != "about" %}
+    <li>
+      <a href="/profile/about">
+        <img class="nav-icon" src="/assets/icons/account_circle.svg" alt="">
+        <span class="link-title">About</span>
+      </a>
+    </li>
+    {% endif %}
+
+    {% if include.hide != "skill" %}
+    <li>
+      <a href="/profile/skill">
+        <img class="nav-icon" src="/assets/icons/fitness_center.svg" alt="">
+        <span class="link-title">Skill</span>
+      </a>
+    </li>
+    {% endif %}
+
+    {% if include.hide != "social" %}
+    <li>
+      <a href="/profile/social">
+        <img class="nav-icon" src="/assets/icons/share.svg" alt="">
+        <span class="link-title">Social</span>
+      </a>
+    </li>
+    {% endif %}
+
+    {% if include.hide != "contact" %}
+    <li>
+      <a href="/profile/contact">
+        <img class="nav-icon" src="/assets/icons/call.svg" alt="">
+        <span class="link-title">Contact</span>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+</div>

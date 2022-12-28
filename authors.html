@@ -1,0 +1,14 @@
+---
+layout: blog
+title: Blogs List
+author: deathvn
+---
+
+{% for author in site.authors %}
+  <h2>
+    <a href="{{ author.url }}">
+      {{ author.name }} - {{ author.position }}
+    </a>
+  </h2>
+  <p>{{ author.content | markdownify }}</p>
+{% endfor %}

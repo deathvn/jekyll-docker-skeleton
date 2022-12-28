@@ -1,0 +1,47 @@
+<style>
+@media (min-width: 768px) {
+  .cropped {
+    overflow: hidden;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .cropped img {
+    width: 300px;
+    height: 150px;
+    border-radius: 4px;
+    object-fit: cover;
+  }
+}
+</style>
+
+<div class="row">
+  {% for post in include.postList %}
+  <div class="col-lg-6">
+    <div class="row border-top mt-3">
+      <div class="col-lg-4 col-md-4 d-flex mt-3 cropped">
+        {% include figure.html
+            img = post.image
+            alt = post.title
+        %}
+      </div>
+      <div class="col-lg-8 col-md-8 align-self-center mt-2">
+        <h4>
+          <a href="{{ post.url }}">{{ post.title }}</a>
+        </h4>
+        {% if post.author %}
+        <p>
+          <span class="text-muted">{{ post.date | date: "%-d %B %Y" }}</span>
+            - 
+          <a class="link-dark" href="{{ site.data.authors[post.author].web }}"><em>{{ post.author }}</em></a>
+        </p>
+        {% endif %}
+        {% if post.lock %}
+          <em class="text-muted">This content is password protected...</em>
+        {% else %}
+          {{ post.excerpt | truncatewords: 12 | markdownify }}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>

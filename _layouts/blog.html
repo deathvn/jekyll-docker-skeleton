@@ -1,0 +1,22 @@
+---
+layout: default
+disqus: false
+archive: false
+---
+
+<!-- This function need to defined first for the fallback of Post's image cover -->
+<script>
+function fallbackImg(imgEl) {
+    /** Set the srcset of source element to backup image when the .webp not found */
+    imgEl.onerror = null; // Avoid the recursion when fallback url is still error
+
+    // Replace all source element srcset by the fallback url inside img element
+    imgEl.parentElement.querySelectorAll("source").forEach(function(srcEl) {
+        srcEl.srcset = imgEl.src;
+        srcEl.type   = imgEl.type;
+    });
+}
+</script>
+
+{{ content }}
+    

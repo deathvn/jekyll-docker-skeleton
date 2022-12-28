@@ -1,0 +1,9 @@
+<figure>
+  <picture>
+    <source type="image/webp" srcset="{{ include.img | split: '.' | slice: 0 }}.webp">
+    <img src="{{ include.img }}" alt="{{ include.alt }}" onerror="fallbackImg(this)">
+  </picture>
+  {% if include.caption %}
+  <figcaption><i class="text-muted" style="display:block; text-align: center;">{{ include.caption }}</i></figcaption>
+  {% endif %}
+</figure>

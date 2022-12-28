@@ -1,0 +1,21 @@
+---
+layout: post
+---
+
+<h2>Tên khác</h2>
+<ul>
+{% for name in page.other_names %}
+  <li>{{ name }}</li>
+{% endfor %}
+</ul>
+
+<h2>Tóm tắt</h2>
+{{ page.excerpt }}
+
+<h2>Danh sách chương</h2>
+{% assign chapters = site.chapters | where: "novel",page.novel %}
+<ul>
+{% for chapter in chapters %}
+  <li><a href="{{ chapter.url }}">{{ chapter.title }}</a></li>
+{% endfor %}
+</ul>

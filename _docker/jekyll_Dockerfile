@@ -1,0 +1,9 @@
+FROM jekyll/jekyll:latest
+
+COPY ./Gemfile /srv/jekyll/Gemfile
+WORKDIR /srv/jekyll
+RUN bundle install
+RUN apk update && \
+    apk upgrade -U && \
+    apk --no-cache add ca-certificates ffmpeg libwebp libwebp-tools && \
+    rm -rf /var/cache/*
